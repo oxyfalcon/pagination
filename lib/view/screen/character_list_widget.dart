@@ -30,30 +30,28 @@ class _CharacterListWidgetState extends ConsumerState<CharacterListWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: CustomScrollView(
-        controller: controller,
-        slivers: [
-          ref.watch(fullCharacterProvider).when(
-              data: (list) => SliverList.builder(
-                  itemCount: list.length,
-                  itemBuilder: (context, index) => ListTile(
-                        title: Text(list[index].name),
-                        subtitle: Text(list[index].status),
-                      )),
-              error: (error, stackTrace) => SliverFillRemaining(
-                    child: Center(
-                      child: Text(error.toString()),
-                    ),
+    return CustomScrollView(
+      controller: controller,
+      slivers: [
+        ref.watch(fullCharacterProvider).when(
+            data: (list) => SliverList.builder(
+                itemCount: list.length,
+                itemBuilder: (context, index) => ListTile(
+                      title: Text(list[index].name),
+                      subtitle: Text(list[index].status),
+                    )),
+            error: (error, stackTrace) => SliverFillRemaining(
+                  child: Center(
+                    child: Text(error.toString()),
                   ),
-              loading: () => const SliverFillRemaining(
-                    child: Center(
-                      child: CircularProgressIndicator.adaptive(),
-                    ),
-                  )),
-          const SliverLoadingList()
-        ],
-      ),
+                ),
+            loading: () => const SliverFillRemaining(
+                  child: Center(
+                    child: CircularProgressIndicator.adaptive(),
+                  ),
+                )),
+        const SliverLoadingList()
+      ],
     );
   }
 }

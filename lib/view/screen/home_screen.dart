@@ -6,6 +6,14 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SafeArea(child: Scaffold(body: CharacterListWidget()));
+    return SafeArea(
+        child: Scaffold(
+            backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+            appBar: AppBar(
+              backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+              title: const Text("Pagination"),
+              centerTitle: true,
+            ),
+            body: const CharacterListWidget()));
   }
 }
