@@ -4,20 +4,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:test_app/main.dart';
 import 'package:http/http.dart' as http;
 
-class CharacterNotifier
-    extends AutoDisposeFamilyAsyncNotifier<List<Character>, int> {
-  @override
-  Future<List<Character>> build(int arg) async =>
-      await CharacterApi().getCharacterList(arg);
-
-  Future<List<Character>> getNextPage(int pageNumber) async =>
-      await CharacterApi().getCharacterList(pageNumber);
-}
-
-final AutoDisposeAsyncNotifierProviderFamily<CharacterNotifier, List<Character>,
-        int> characterProvider =
-    AutoDisposeAsyncNotifierProviderFamily<CharacterNotifier, List<Character>,
-        int>(() => CharacterNotifier());
+final characterProvider =
+    FutureProviderFamily<List<Character>, int>((ref, arg) async {
+  if (arg == 1) {
+    return <Character>[];
+  } else {
+    return await CharacterApi().getCharacterList(arg);
+  }
+});
 
 class CharacterApi {
   CharacterApi._();

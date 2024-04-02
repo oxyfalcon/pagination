@@ -35,9 +35,8 @@ class _TestWidgetState extends ConsumerState<TestWidget> {
       final double currentScroll = controller.offset;
       if (maxScroll == currentScroll) {
         int page = ref.read(pageNumberProvider);
-        // log("i am here");
         page += 1;
-        ref.read(pageNumberProvider.notifier).change(page);
+        ref.watch(pageNumberProvider.notifier).change(page);
       }
     });
     super.initState();
@@ -45,27 +44,30 @@ class _TestWidgetState extends ConsumerState<TestWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(
-      controller: controller,
-      slivers: [
-        ref.watch(fullCharacterProvider).when(
-            data: (list) => SliverList.builder(
-                itemCount: list.length,
-                itemBuilder: (context, index) => ListTile(
-                      title: Text(list[index].name),
-                      subtitle: Text(list[index].status),
-                    )),
-            error: (error, stackTrace) => SliverToBoxAdapter(
-                  child: Center(
-                    child: Text(error.toString()),
-                  ),
-                ),
-            loading: () => const SliverToBoxAdapter(
+    return Center(
+      child: CustomScrollView(
+        controller: controller,
+        slivers: [
+          ref.watch(fullCharacterProvider).when(
+              data: (list) => SliverList.builder(
+                  itemCount: list.length,
+                  itemBuilder: (context, index) => ListTile(
+                        title: Text(list[index].name),
+                        subtitle: Text(list[index].status),
+                      )),
+              error: (error, stackTrace) => SliverFillRemaining(
                     child: Center(
-                  child: CircularProgressIndicator.adaptive(),
-                ))),
-        const SliverLoadingList()
-      ],
+                      child: Text(error.toString()),
+                    ),
+                  ),
+              loading: () => const SliverFillRemaining(
+                    child: Center(
+                      child: CircularProgressIndicator.adaptive(),
+                    ),
+                  )),
+          const SliverLoadingList()
+        ],
+      ),
     );
   }
 }
@@ -86,10 +88,11 @@ class SliverLoadingList extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return ref.watch(characterProvider(ref.watch(pageNumberProvider))).when(
+    int pageNumber = ref.watch(pageNumberProvider);
+    return ref.watch(characterProvider(pageNumber)).when(
         data: (list) {
           WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-            if (ref.watch(pageNumberProvider) > 1) {
+            if (pageNumber > 1) {
               ref
                   .watch(fullCharacterProvider.notifier)
                   .appendCharacterList(list);
