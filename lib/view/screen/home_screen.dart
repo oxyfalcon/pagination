@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:test_app/view/screen/character_list_widget.dart';
+import 'package:pagination/view/screen/character_list_widget.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});

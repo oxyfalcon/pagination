@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:test_app/view_model/provider.dart';
-import 'package:test_app/view/widget/sliver_loading_list.dart';
+import 'package:pagination/view_model/provider.dart';
+import 'package:pagination/view/widget/sliver_loading_list.dart';
 
 class CharacterListWidget extends ConsumerStatefulWidget {
   const CharacterListWidget({super.key});

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:test_app/view_model/provider.dart';
+import 'package:pagination/view_model/provider.dart';
 
 class SliverLoadingList extends ConsumerWidget {
   const SliverLoadingList({super.key});
