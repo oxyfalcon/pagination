@@ -10,13 +10,9 @@ class SliverLoadingList extends ConsumerWidget {
     int pageNumber = ref.watch(pageNumberProvider);
     return ref.watch(characterProvider(pageNumber)).when(
         data: (list) {
-          WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-            if (pageNumber > 1) {
-              ref
-                  .watch(fullCharacterProvider.notifier)
-                  .appendCharacterList(list);
-            }
-          });
+          WidgetsBinding.instance.addPostFrameCallback((timeStamp) => ref
+              .watch(fullCharacterProvider.notifier)
+              .appendCharacterList(list));
           return const SliverToBoxAdapter(child: SizedBox.shrink());
         },
         error: (error, stackTrace) =>
