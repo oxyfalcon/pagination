@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:test_app/main.dart';
 import 'package:http/http.dart' as http;
+import 'package:test_app/model/character_model.dart';
 
 final characterProvider =
     FutureProviderFamily<List<Character>, int>((ref, arg) async {
